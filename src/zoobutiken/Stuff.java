@@ -4,21 +4,22 @@ package zoobutiken;
 
 public abstract class Stuff implements Product {
     
-    protected String name;
+    protected String nameOfProduct;
     protected double price;
-    public Stuff(String name, double price){
-    this.name=name;
-    this.price=price;
+    protected String country;
+//    public Stuff(String nameOfProduct, double price){
+//    this.nameOfProduct=nameOfProduct;
+//    this.price=price;
+//    }
+
+    
+    public String getNameOfProduct() {
+        return nameOfProduct;
     }
 
     
-    public String getName() {
-        return name;
-    }
-
-    
-    public void setName(String name) {
-        this.name = name;
+    public void setNameOfProduct(String nameOfProduct) {
+        this.nameOfProduct = nameOfProduct;
     }
 
     
@@ -29,6 +30,19 @@ public abstract class Stuff implements Product {
     
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    
+    public String getCountry() {
+        return country;
+    }
+
+    
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    public String toString(){
+    return new String(nameOfProduct+"|"+price+"|"+country);
     }
     
     

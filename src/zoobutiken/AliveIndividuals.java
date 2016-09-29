@@ -6,37 +6,35 @@ import java.util.List;
 
 public abstract class AliveIndividuals implements Product {
     
-    protected String breed;
+    
+    protected String nameOfProduct;
+    protected double price;
     protected int age;
     protected boolean isPredator;
-    protected List <Food> food;
+    
 
  
     
-    public AliveIndividuals(String breed, int age, boolean isPredator){
-    this.breed= breed;
-    this.age=age;
-    this.isPredator=isPredator;
-    }
+//    public AliveIndividuals(String nameOfProduct, int age, boolean isPredator){
+//    this.nameOfProduct= nameOfProduct;
+//    this.age=age;
+//    this.isPredator=isPredator;
+//    }
     
     public String toString(){
-        String s= " Is a predator";
-        if(isIsPredator()==false){
-        s="Is not a predator";
-        }
-    return new String("Breed "+getBreed()+" age "+getAge()+s);
+    return new String(getNameOfProduct()+"|"+price+"|"+age+"|"+isPredator);
     }
 
     /**
-     * @return the breed
+     * @return the nameOfProduct
      */
-    public String getBreed() {
-        return breed;
+    public String getNameOfProduct() {
+        return nameOfProduct;
     }
 
    
-    public void setBreed(String breed) {
-        this.breed = breed;
+    public void setNameOfProduct(String nameOfProduct) {
+        this.nameOfProduct = nameOfProduct;
     }
 
     
@@ -45,27 +43,26 @@ public abstract class AliveIndividuals implements Product {
     }
 
    
-    public void setAge(int age) {
+    public void setAliveIndividualsParameters(int age, boolean isPredator) {
         this.age = age;
+         this.isPredator = isPredator;
     }
 
     
-    public boolean isIsPredator() {
+    public boolean isPredator() {
         return isPredator;
     }
 
-   
-    public void setIsPredator(boolean isPredator) {
-        this.isPredator = isPredator;
+    
+    public double getPrice() {
+        return price;
     }
 
     
-    public List <Food> getFood() {
-        return food;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
+    
    
-    public void setFood(List <Food> food) {
-        this.food = food;
-    }
 }
