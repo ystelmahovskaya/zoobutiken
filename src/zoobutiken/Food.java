@@ -45,7 +45,7 @@ public class Food extends Stuff {
         return temperature;
     }
        public String toString(){
-    return new String(super.toString()+"|"+produced+"|"+expirationDate+"|"+isAlive+"|"+temperature);
+    return new String("Food"+"|"+super.toString()+"|"+produced+"|"+expirationDate+"|"+isAlive+"|"+temperature);
     }
     
 }

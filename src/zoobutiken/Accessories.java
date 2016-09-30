@@ -42,7 +42,7 @@ public class Accessories extends Stuff {
         return width;
     }
     public String toString(){
-    return new String(super.toString()+"|"+weight+"|"+heigh+"|"+length+"|"+width);
+    return new String("Accesories"+"|"+super.toString()+"|"+weight+"|"+heigh+"|"+length+"|"+width);
     }
     
 }

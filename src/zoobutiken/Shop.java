@@ -16,12 +16,16 @@ public class Shop {
 
     @Override
     public String toString() {
-        return branchName;
+        return getBranchName();
     }
 
     
     public List <Product> getListOfProducts() {
         return listOfProducts;
+    }
+
+    public String getBranchName() {
+        return branchName;
     }
     
     

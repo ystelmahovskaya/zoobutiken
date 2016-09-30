@@ -22,7 +22,7 @@ public class Birds extends AliveIndividuals {
         this.species = species;
     }
     public String toString(){
-    return new String(super.toString()+"|"+species);
+    return new String("Bird"+"|"+super.toString()+"|"+species);
     }
     
     

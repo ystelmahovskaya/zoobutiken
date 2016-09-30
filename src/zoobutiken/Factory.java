@@ -31,6 +31,11 @@ public class Factory {
         LOG.info("new amphibium added");
     return new Amphibium();
     }
+     else if(type.equalsIgnoreCase("Bird")){
+        LOG.info("new bird added");
+    return new Birds();
+    }
+    
     else if(type.equalsIgnoreCase("LittleAnimals")){
         LOG.info("new little animal added");
     return new LittleAnimals();

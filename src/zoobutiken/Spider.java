@@ -28,7 +28,7 @@ public class Spider extends AliveIndividuals {
         return habitat;
     }
     public String toString(){
-    return new String(super.toString()+"|"+venomous+"|"+habitat);
+    return new String("Spider"+"|"+super.toString()+"|"+venomous+"|"+habitat);
     }
 
 }

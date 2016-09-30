@@ -29,7 +29,7 @@ public class Insects extends AliveIndividuals {
     }
     
      public String toString(){
-    return new String(super.toString()+"|"+venomous+"|"+flying);
+    return new String("Insect"+"|"+super.toString()+"|"+venomous+"|"+flying);
     }
 
     

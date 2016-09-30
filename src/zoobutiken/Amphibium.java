@@ -35,5 +35,8 @@ public class Amphibium extends AliveIndividuals {
     public boolean isLiveInSaltWater() {
         return liveInSaltWater;
     }
+    public String toString(){
+    return new String("Fish"+"|"+super.toString()+"|"+venomous+"|"+poison+"|"+liveInSaltWater);
+    }
     
 }

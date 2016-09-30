@@ -19,3 +19,7 @@
 2016-09-29 23:07:57.407 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
 2016-09-29 23:18:27.683 [main] INFO  zoobutiken.Factory - new fish added
 2016-09-29 23:21:10.821 [main] INFO  zoobutiken.Factory - new fish added
+2016-09-30 09:21:50.724 [main] INFO  zoobutiken.Factory - new fish added
+2016-09-30 09:26:35.709 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 09:33:09.231 [main] INFO  zoobutiken.Factory - new fish added
+2016-09-30 09:48:54.903 [main] INFO  zoobutiken.Factory - new bird added

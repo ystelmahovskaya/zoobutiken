@@ -20,7 +20,7 @@ public class LittleAnimals extends AliveIndividuals {
         this.avarageLife = avarageLife;
     }
     public String toString(){
-    return new String(super.toString()+"|"+avarageLife);
+    return new String("LittleAnimal"+"|"+super.toString()+"|"+avarageLife);
     }
    
 }

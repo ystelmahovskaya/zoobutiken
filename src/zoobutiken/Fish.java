@@ -28,5 +28,9 @@ public class Fish extends AliveIndividuals{
         this.liveInSaltWater = liveInSaltWater;
     }
     
+     public String toString(){
+    return new String("Fish"+"|"+super.toString()+"|"+temperature+"|"+liveInSaltWater);
+    }
+    
     
 }

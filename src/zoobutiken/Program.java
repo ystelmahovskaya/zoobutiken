@@ -1,6 +1,6 @@
 package zoobutiken;
 
-import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class Program {
             } else if (answer == 2) {
                 User user = addNewUser();
                 users.add(user);
-                FileWriter fw = new FileWriter("users.txt");//?????
+                FileWriter fw = new FileWriter("users.txt",true);//????? apend
                 BufferedWriter bfw = new BufferedWriter(fw);
                 bfw.write(user.toString());
                 bfw.newLine();
@@ -76,15 +76,30 @@ public class Program {
                     print();
                 } else if (answer == 2) {
                     shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard());
+                    printToFile();
                 } else if (answer == 10) {
+                     printToFile();
+                     activeBranch=-1;
                     activeBranch = branchChoice();
                 } else if (answer == 0) {
                     //TODO add printing to the file
+                    printToFile();
                     run = false;
                 }
 
             }
         } while (run);
+    }
+    
+    public void printToFile() throws IOException{
+        String filename=shops.get(activeBranch).getBranchName()+".txt";
+    FileWriter fw = new FileWriter(filename);//????? apend
+                BufferedWriter bfw = new BufferedWriter(fw);
+                for(Product product:shops.get(activeBranch).getListOfProducts()){
+                     bfw.write(product.toString());
+                      bfw.newLine();
+                }
+                bfw.close();
     }
 
     public void print() {
