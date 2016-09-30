@@ -1,13 +1,18 @@
 package zoobutiken;
 
-
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class Program {
 
@@ -24,29 +29,29 @@ public class Program {
 
         boolean isAuthorized = false;
         do {
-            if(isAuthorized==false){
-            do {
-                System.out.println("Welcome!");
-                System.out.println("[1]Loggin");
-                System.out.println("[2]Create user");
-                System.out.println("[0]Quit");
-                answer = reader.usersIntInput();
-            } while (answer != 1 && answer != 2 && answer != 0);
-            if (answer == 0) {
-                run = false;
-            } else if (answer == 1) {
-                //TODO Leon: implement login function 
-                //if login is succesful isAuthorised=true;
-            } else if (answer == 2) {
-                User user = addNewUser();
-                users.add(user);
-                FileWriter fw = new FileWriter("users.txt",true);//????? apend
-                BufferedWriter bfw = new BufferedWriter(fw);
-                bfw.write(user.toString());
-                bfw.newLine();
-                bfw.close();
-                isAuthorized = true;
-            }
+            if (isAuthorized == false) {
+                do {
+                    System.out.println("Welcome!");
+                    System.out.println("[1]Loggin");
+                    System.out.println("[2]Create user");
+                    System.out.println("[0]Quit");
+                    answer = reader.usersIntInput();
+                } while (answer != 1 && answer != 2 && answer != 0);
+                if (answer == 0) {
+                    run = false;
+                } else if (answer == 1) {
+                    //TODO Leon: implement login function 
+                    //if login is succesful isAuthorised=true;
+                } else if (answer == 2) {
+                    User user = addNewUser();
+                    users.add(user);
+                    FileWriter fw = new FileWriter("users.txt", true);
+                    BufferedWriter bfw = new BufferedWriter(fw);
+                    bfw.write(user.toString());
+                    bfw.newLine();
+                    bfw.close();
+                    isAuthorized = true;
+                }
             }
             answer = -1;
 
@@ -78,11 +83,10 @@ public class Program {
                     shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard());
                     printToFile();
                 } else if (answer == 10) {
-                     printToFile();
-                     activeBranch=-1;
+                    printToFile();
+                    activeBranch = -1;
                     activeBranch = branchChoice();
                 } else if (answer == 0) {
-                    //TODO add printing to the file
                     printToFile();
                     run = false;
                 }
@@ -90,22 +94,116 @@ public class Program {
             }
         } while (run);
     }
-    
-    public void printToFile() throws IOException{
-        String filename=shops.get(activeBranch).getBranchName()+".txt";
-    FileWriter fw = new FileWriter(filename);//????? apend
-                BufferedWriter bfw = new BufferedWriter(fw);
-                for(Product product:shops.get(activeBranch).getListOfProducts()){
-                     bfw.write(product.toString());
-                      bfw.newLine();
-                }
-                bfw.close();
+
+    public void printToFile() throws IOException {
+        String filename = shops.get(activeBranch).getBranchName() + ".txt";
+        FileWriter fw = new FileWriter("/Users/yuliiastelmakhovska/NetBeansProjects/zoobutiken/branches/" + filename);//WRITE YOUR PATH
+        BufferedWriter bfw = new BufferedWriter(fw);
+        for (Product product : shops.get(activeBranch).getListOfProducts()) {
+            bfw.write(product.toString());
+            bfw.newLine();
+        }
+        bfw.close();
     }
 
     public void print() {
         for (Product product : shops.get(activeBranch).listOfProducts) {
             System.out.println(product);
         }
+    }
+
+    public void print1() {
+        for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
+            System.out.println((i + 1) + "" + shops.get(activeBranch).getListOfProducts().get(i));
+        }
+    }
+
+    public void populateBranchList() throws IOException {
+        try{    
+        File folder = new File("/Users/yuliiastelmakhovska/NetBeansProjects/zoobutiken/branches/");
+        System.out.println(folder.getUsableSpace());
+        File listOfFiles[] = folder.listFiles();
+        if(listOfFiles!=null){
+        System.out.println( folder.listFiles());
+        for(File file:listOfFiles){
+            System.out.println(file);
+        }
+        }
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            int txt = 4;
+          if (listOfFiles[i].isFile()&&listOfFiles[i].getName().contains("bra")) {
+                       System.out.println(listOfFiles[i].getName()); 
+                Shop shop = new Shop(listOfFiles[i].getName());
+                populateListFromFile(shop.getListOfProducts(), listOfFiles[i].getAbsolutePath());
+                shops.add(shop);
+
+         }
+        }
+}catch(Exception e){
+         // if any error occurs
+         e.printStackTrace();
+      }
+    }
+
+    public void populateListFromFile(List<Product> products, String filename) throws IOException {
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            String strLine;
+            BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
+            while ((strLine = br.readLine()) != null) {
+                products.add(parseProductfromString(strLine));
+            }
+            br.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+
+    }
+
+    public Product parseProductfromString(String str) {
+        String[] array = str.split("[|]+");
+
+       
+        Product product = Factory.getInstance().getProduct(array[0]);
+        product.setNameOfProduct(array[1]);
+        product.setPrice(Double.parseDouble(array[2]));
+        if (product instanceof AliveIndividuals) {
+            ((AliveIndividuals) product).setAliveIndividualsParameters(Integer.parseInt(array[3]), Boolean.parseBoolean(array[4]));
+            if (product instanceof Birds) {
+                ((Birds) product).setBirdsParameters(array[5]);
+                return product;
+            } else if (product instanceof Fish) {
+                ((Fish) product).setFishParameters(Integer.parseInt(array[5]), Boolean.parseBoolean(array[6]));
+                return product;
+            } else if (product instanceof Amphibium) {
+                ((Amphibium) product).setAmphibiumParameters(Boolean.parseBoolean(array[5]), Boolean.parseBoolean(array[6]), Boolean.parseBoolean(array[7]));
+                return product;
+            } else if (product instanceof LittleAnimals) {
+                ((LittleAnimals) product).setAvarageLife(Integer.parseInt(array[5]));
+                return product;
+            } else if (product instanceof Insects) {
+                ((Insects) product).setInsectsparameters(Boolean.parseBoolean(array[5]), Boolean.parseBoolean(array[6]));
+                return product;
+            } else if (product instanceof Spider) {
+                ((Spider) product).setSpidersParameters(Boolean.parseBoolean(array[5]), array[6]);
+                return product;
+            }
+        } else if (product instanceof Stuff) {
+            ((Stuff) product).setCountry(array[3]);
+            if (product instanceof Food) {
+                ((Food) product).setFoodParameters(reader.parseDateFromString(array[5]),
+                        reader.parseDateFromString(array[6]), Boolean.parseBoolean(array[7]), Integer.parseInt(array[8]));
+                return product;
+            } else if (product instanceof Accessories) {
+                ((Accessories) product).setAccessoriesParameters(Double.parseDouble(array[5]), Double.parseDouble(array[6]),
+                        Double.parseDouble(array[7]), Double.parseDouble(array[8]));
+                return product;
+            }
+        }
+        return null;
     }
 
     public User addNewUser() {
@@ -131,7 +229,7 @@ public class Program {
 
     private boolean userVerification(String name, String password) {
         for (User userFromList : users) {
-            if (name.equalsIgnoreCase(userFromList.getUsername()) && password.length() < 3) {
+            if (name.equalsIgnoreCase(userFromList.getUsername()) && password.length() < 3) {//?????
                 return false;
             }
         }
