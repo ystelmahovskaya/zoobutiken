@@ -1,1 +1,1 @@
-Bird|blabla|1.0|1|true|qqq
+Food|uu|11.0|ww|2012-11-11|2015-11-11|false|-24

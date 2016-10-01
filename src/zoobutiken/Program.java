@@ -40,8 +40,7 @@ public class Program {
                 if (answer == 0) {
                     run = false;
                 } else if (answer == 1) {
-                    //TODO Leon: implement login function 
-                    //if login is succesful isAuthorised=true;
+                    isAuthorized = login();
                 } else if (answer == 2) {
                     User user = addNewUser();
                     users.add(user);
@@ -95,6 +94,42 @@ public class Program {
         } while (run);
     }
 
+    public boolean login() {
+        System.out.println("Write your username");
+        String username = reader.usersStringInput();
+        System.out.println("Write your password");
+        String password = reader.usersStringInput();
+        for (User user : users) {
+            System.out.println(user);
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                System.out.println("Welcome, " + user.getName());
+                return true;
+            }
+        }
+        System.out.println("Login failed check your data or create e user");
+        return false;
+    }
+
+    public void populateUsersList() throws IOException {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("users.txt");
+            String strLine;
+            BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
+            while ((strLine = br.readLine()) != null) {
+                users.add(parseUserFromString(strLine));
+            }
+            br.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+    }
+
+    public User parseUserFromString(String str) {
+        String[] array = str.split("[,]+");
+        return new User(array[0], array[1], array[2]);
+    }
+
     public void printToFile() throws IOException {
         String filename = shops.get(activeBranch).getBranchName() + ".txt";
         FileWriter fw = new FileWriter("/Users/yuliiastelmakhovska/NetBeansProjects/zoobutiken/branches/" + filename);//WRITE YOUR PATH
@@ -119,31 +154,31 @@ public class Program {
     }
 
     public void populateBranchList() throws IOException {
-        try{    
-        File folder = new File("/Users/yuliiastelmakhovska/NetBeansProjects/zoobutiken/branches/");
-        System.out.println(folder.getUsableSpace());
-        File listOfFiles[] = folder.listFiles();
-        if(listOfFiles!=null){
-        System.out.println( folder.listFiles());
-        for(File file:listOfFiles){
-            System.out.println(file);
-        }
-        }
+        try {
+            File folder = new File("/Users/yuliiastelmakhovska/NetBeansProjects/zoobutiken/branches/");//WRITE YOUR PATH
+            System.out.println(folder.getUsableSpace());
+            File listOfFiles[] = folder.listFiles();
+            if (listOfFiles != null) {
+                System.out.println(folder.listFiles());
+                for (File file : listOfFiles) {
+                    System.out.println(file);
+                }
+            }
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            int txt = 4;
-          if (listOfFiles[i].isFile()&&listOfFiles[i].getName().contains("bra")) {
-                       System.out.println(listOfFiles[i].getName()); 
-                Shop shop = new Shop(listOfFiles[i].getName());
-                populateListFromFile(shop.getListOfProducts(), listOfFiles[i].getAbsolutePath());
-                shops.add(shop);
+            for (int i = 0; i < listOfFiles.length; i++) {
+                int txt = 4;
+                if (listOfFiles[i].isFile() && listOfFiles[i].getName().contains("bra")) {
+                    System.out.println(listOfFiles[i].getName());
+                    Shop shop = new Shop(listOfFiles[i].getName());
+                    populateListFromFile(shop.getListOfProducts(), listOfFiles[i].getAbsolutePath());
+                    shops.add(shop);
 
-         }
+                }
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
         }
-}catch(Exception e){
-         // if any error occurs
-         e.printStackTrace();
-      }
     }
 
     public void populateListFromFile(List<Product> products, String filename) throws IOException {
@@ -166,7 +201,6 @@ public class Program {
     public Product parseProductfromString(String str) {
         String[] array = str.split("[|]+");
 
-       
         Product product = Factory.getInstance().getProduct(array[0]);
         product.setNameOfProduct(array[1]);
         product.setPrice(Double.parseDouble(array[2]));
@@ -313,7 +347,7 @@ public class Program {
                 System.out.println("Is it alive?Y/N");
                 boolean isAlive = reader.YN_UsersAnswer();
                 System.out.println("Recomended temperature?");
-                int temperature = reader.usersIntInput();//todo override to negative temperature possibility
+                int temperature = reader.usersIntInputNegativeIncluded();
                 ((Food) product).setFoodParameters(produced, expirationDate, isAlive, temperature);
                 return product;
             } else if (product instanceof Accessories) {
@@ -342,7 +376,7 @@ public class Program {
                 System.out.println("[1]Create new branch");
                 if (shops.size() > 0) {
                     System.out.println("[2]Choose the branch");
-
+                    avaliable = 2;
                 }
                 answer = reader.usersIntInput();
             } while (answer != 1 && answer != 2);

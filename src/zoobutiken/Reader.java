@@ -1,5 +1,6 @@
 package zoobutiken;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMsg;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,23 @@ public class Reader {
         } while (result < 0);
         return result;
     }
+     public int usersIntInputNegativeIncluded() {
+ int result;
+       
+ 
+            try {
+            result   = scanner.nextInt();
+
+            } catch (Exception exception) {
+                System.out.println("Wrong data input you need to write a number");
+                LOG.trace("Reader.usersIntInput" + exception.getMessage());
+                return usersIntInputNegativeIncluded();
+            }
+            scanner.nextLine();
+       return result;
+        
+    }
+
 
     public String usersStringInput() {
         String s = "";

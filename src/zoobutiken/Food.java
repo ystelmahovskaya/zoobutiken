@@ -1,7 +1,10 @@
 
 package zoobutiken;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class Food extends Stuff {
@@ -45,7 +48,9 @@ public class Food extends Stuff {
         return temperature;
     }
        public String toString(){
-    return new String("Food"+"|"+super.toString()+"|"+produced+"|"+expirationDate+"|"+isAlive+"|"+temperature);
+           DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+           
+    return new String("Food"+"|"+super.toString()+"|"+format.format(getProduced()) +"|"+format.format(getExpirationDate())+"|"+isAlive+"|"+temperature);
     }
     
 }

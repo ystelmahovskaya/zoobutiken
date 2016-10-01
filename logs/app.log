@@ -44,3 +44,64 @@
 2016-09-30 15:59:07.511 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
 2016-09-30 16:01:38.525 [main] INFO  zoobutiken.Factory - new bird added
 2016-09-30 16:02:24.617 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-09-30 19:37:56.136 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 19:39:05.557 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 19:39:05.562 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 19:41:23.051 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-09-30 19:41:26.440 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 19:41:26.446 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 19:42:30.037 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-09-30 19:57:46.814 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 19:57:46.817 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 19:59:47.834 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-09-30 19:59:51.157 [main] INFO  zoobutiken.Factory - new bird added
+2016-09-30 19:59:51.161 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:30:39.221 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-10-01 11:35:15.341 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:35:15.345 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:38:10.634 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-10-01 11:38:13.675 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:38:13.679 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:38:34.891 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-10-01 11:40:01.637 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:40:01.641 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:41:00.888 [main] INFO  zoobutiken.Factory - new fish added
+2016-10-01 11:41:08.987 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-10-01 11:41:50.561 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:41:50.564 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:41:50.564 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:41:50.565 [main] INFO  zoobutiken.Factory - new fish added
+2016-10-01 11:50:16.516 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-10-01 11:51:10.468 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:51:10.472 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:51:10.472 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:51:10.472 [main] INFO  zoobutiken.Factory - new fish added
+2016-10-01 11:51:41.007 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:51:41.013 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:51:41.013 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 11:51:41.014 [main] INFO  zoobutiken.Factory - new fish added
+2016-10-01 12:48:17.419 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 12:48:17.429 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 12:48:17.430 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 12:48:17.431 [main] INFO  zoobutiken.Factory - new fish added
+2016-10-01 12:48:17.433 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 12:48:17.434 [main] INFO  zoobutiken.Factory - new fish added
+2016-10-01 12:49:05.401 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-10-01 12:56:03.340 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 12:56:03.346 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 12:56:03.347 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 12:56:03.347 [main] INFO  zoobutiken.Factory - new fish added
+2016-10-01 12:56:03.349 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 12:56:03.349 [main] INFO  zoobutiken.Factory - new fish added
+2016-10-01 12:56:52.012 [main] INFO  zoobutiken.Factory - new food item added
+2016-10-01 13:03:41.794 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 13:03:41.797 [main] INFO  zoobutiken.Factory - new bird added
+2016-10-01 13:03:41.798 [main] INFO  zoobutiken.Factory - new food item added
+2016-10-01 13:03:41.805 [main] TRACE zoobutiken.Reader - Reader.parseDateFromStringUnparseable date: "Sat Nov 11 00:00:00 CET 2017"
+2016-10-01 13:03:41.806 [main] TRACE zoobutiken.Reader - Reader.parseDateFromStringUnparseable date: "false"
+2016-10-01 13:05:04.064 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-10-01 13:05:36.874 [main] INFO  zoobutiken.Factory - new food item added
+2016-10-01 13:06:46.300 [main] TRACE zoobutiken.Reader - Reader.usersIntInputnull
+2016-10-01 13:07:42.515 [main] INFO  zoobutiken.Factory - new food item added
+2016-10-01 13:08:21.972 [main] INFO  zoobutiken.Factory - new food item added
+2016-10-01 13:08:21.982 [main] TRACE zoobutiken.Reader - Reader.parseDateFromStringUnparseable date: "false"
