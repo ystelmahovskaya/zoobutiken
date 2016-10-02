@@ -12,14 +12,32 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+//import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
 public class Program {
 
     protected List<Shop> shops = new ArrayList<Shop>();
     protected List<User> users = new ArrayList<User>();
     Reader reader = new Reader();
-    protected String types[] = {"Bird", "Fish", "LittleAnimal", "Amphibium", "Spider", "Insect", "Food", "Accessories"};
+    Gson gsonUser = new Gson();
+    final RuntimeTypeAdapterFactory<Product> adapter
+            = RuntimeTypeAdapterFactory
+            .of(Product.class)
+            .registerSubtype(Product.class)
+            .registerSubtype(AliveIndividuals.class)
+            .registerSubtype(Stuff.class)
+            .registerSubtype(Birds.class)
+            .registerSubtype(Spider.class)
+            .registerSubtype(Fish.class)
+            .registerSubtype(LittleAnimals.class)
+            .registerSubtype(Amphibium.class)
+            .registerSubtype(Food.class)
+            .registerSubtype(Accessories.class)
+            .registerSubtype(Insects.class);
+    final Gson gsonProduct = new GsonBuilder().registerTypeAdapterFactory(adapter).create();
+    protected String types[] = {"Bird", "Fish", "LittleAnimals", "Amphibium", "Spider", "Insects", "Food", "Accessories"};
     int activeBranch = -1;
 
     public void run() throws IOException {
@@ -42,11 +60,13 @@ public class Program {
                 } else if (answer == 1) {
                     isAuthorized = login();
                 } else if (answer == 2) {
+
                     User user = addNewUser();
                     users.add(user);
-                    FileWriter fw = new FileWriter("users.txt", true);
+                    FileWriter fw = new FileWriter("users.json", true);
                     BufferedWriter bfw = new BufferedWriter(fw);
-                    bfw.write(user.toString());
+                    String userJson = gsonUser.toJson(user);
+                    bfw.write(userJson);
                     bfw.newLine();
                     bfw.close();
                     isAuthorized = true;
@@ -66,22 +86,33 @@ public class Program {
                     System.out.println("[4]Sort by product's name");
                     System.out.println("[5]Sort by product's price");
                     System.out.println("[6]Sort by product's type");
-                    System.out.println("[6]Find by name");
-                    System.out.println("[7]Find by price");
-                    System.out.println("[8]Find by type");
-                    System.out.println("[9]Delete item");
-                    System.out.println("[10]Change the branch");
+                    System.out.println("[7]Find by name");
+                    System.out.println("[8]Find by price");
+                    System.out.println("[9]Find by type");
+                    System.out.println("[10]Delete item");
+                    System.out.println("[11]Change the branch");
                     System.out.println("[0]Quit");
                     answer = reader.usersIntInput();
                 } while (answer != 1 && answer != 2 && answer != 3 && answer != 4 && answer != 5
                         && answer != 6 && answer != 7 && answer != 8 && answer != 9 && answer != 10
+                        && answer != 11
                         && answer != 0);
                 if (answer == 1) {
                     print();
                 } else if (answer == 2) {
                     shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard());
                     printToFile();
-                } else if (answer == 10) {
+                } else if (answer == 7) {
+                    searchingByName();
+                } else if (answer == 8) {
+                    searchingByPrice();
+                } else if (answer == 9) {
+                    searchingByType();
+                }
+                else if (answer == 10) {
+                    deleteItem();
+                } 
+                else if (answer == 11) {
                     printToFile();
                     activeBranch = -1;
                     activeBranch = branchChoice();
@@ -93,6 +124,73 @@ public class Program {
             }
         } while (run);
     }
+    
+    public void deleteItem() throws IOException{
+        print1();
+    System.out.println("Write the number in the list which do you want to remove");
+       int index=reader.usersIntInput()-1;
+       if(index>0&&index<shops.get(activeBranch).getListOfProducts().size()){
+       shops.get(activeBranch).getListOfProducts().remove(index);
+       printToFile();
+       }
+       else {
+           System.out.println("Wrong number try again");
+       }
+    
+    }
+
+    public void searchingByName() {
+        System.out.println("Write the name of the product which do you want to find");
+        String name = reader.usersStringInput();
+        int counter = 0;
+        for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
+            if (shops.get(activeBranch).getListOfProducts().get(i).getNameOfProduct().equalsIgnoreCase(name)) {
+                counter++;
+                System.out.println(counter + " " + shops.get(activeBranch).getListOfProducts().get(i));
+            }
+        }
+        if (counter == 0) {
+            System.out.println("No matches found");
+        }
+    }
+
+    public void searchingByPrice() {
+        System.out.println("Write the price of the product which do you want to find");
+        double price = reader.usersDoubleInput();
+        int counter = 0;
+        for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
+            if (shops.get(activeBranch).getListOfProducts().get(i).getPrice() == price) {
+                counter++;
+                System.out.println(counter + " " + shops.get(activeBranch).getListOfProducts().get(i));
+            }
+        }
+        if (counter == 0) {
+            System.out.println("No matches found");
+        }
+    }
+
+    public void searchingByType() {
+        System.out.println("Choose the type which do you want to find");
+        int answer = -1;
+        int counter = 0;
+        do {
+
+            for (int i = 0; i < types.length; i++) {
+                System.out.println((i + 1) + " " + types[i]);
+            }
+            answer = reader.usersIntInput() - 1;
+        } while (answer < 0 && answer > types.length);
+        for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
+            if (shops.get(activeBranch).getListOfProducts().get(i).getClass().toString().contains(types[answer])) {
+                counter++;
+                System.out.println(counter + " " + shops.get(activeBranch).getListOfProducts().get(i));
+
+            }
+        }
+        if (counter == 0) {
+            System.out.println("No matches found");
+        }
+    }
 
     public boolean login() {
         System.out.println("Write your username");
@@ -100,23 +198,23 @@ public class Program {
         System.out.println("Write your password");
         String password = reader.usersStringInput();
         for (User user : users) {
-            System.out.println(user);
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 System.out.println("Welcome, " + user.getName());
                 return true;
             }
         }
-        System.out.println("Login failed check your data or create e user");
+        System.out.println("Login failed check your data or create a user");
         return false;
     }
 
     public void populateUsersList() throws IOException {
         try {
-            FileInputStream fileInputStream = new FileInputStream("users.txt");
+            FileInputStream fileInputStream = new FileInputStream("users.json");
             String strLine;
             BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
             while ((strLine = br.readLine()) != null) {
-                users.add(parseUserFromString(strLine));
+                User user = gsonUser.fromJson(strLine, User.class);
+                users.add(user);
             }
             br.close();
 
@@ -125,17 +223,14 @@ public class Program {
         }
     }
 
-    public User parseUserFromString(String str) {
-        String[] array = str.split("[,]+");
-        return new User(array[0], array[1], array[2]);
-    }
-
     public void printToFile() throws IOException {
-        String filename = shops.get(activeBranch).getBranchName() + ".txt";
+
+        String filename = shops.get(activeBranch).getBranchName() + ".json";
         FileWriter fw = new FileWriter("/Users/yuliiastelmakhovska/NetBeansProjects/zoobutiken/branches/" + filename);//WRITE YOUR PATH
         BufferedWriter bfw = new BufferedWriter(fw);
+
         for (Product product : shops.get(activeBranch).getListOfProducts()) {
-            bfw.write(product.toString());
+            bfw.write(gsonProduct.toJson(product, Product.class));
             bfw.newLine();
         }
         bfw.close();
@@ -166,10 +261,9 @@ public class Program {
             }
 
             for (int i = 0; i < listOfFiles.length; i++) {
-                int txt = 4;
                 if (listOfFiles[i].isFile() && listOfFiles[i].getName().contains("bra")) {
                     System.out.println(listOfFiles[i].getName());
-                    Shop shop = new Shop(listOfFiles[i].getName());
+                    Shop shop = new Shop(listOfFiles[i].getName().substring(0, listOfFiles[i].getName().length() - 5));
                     populateListFromFile(shop.getListOfProducts(), listOfFiles[i].getAbsolutePath());
                     shops.add(shop);
 
@@ -188,7 +282,8 @@ public class Program {
             String strLine;
             BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
             while ((strLine = br.readLine()) != null) {
-                products.add(parseProductfromString(strLine));
+                Product product = gsonProduct.fromJson(strLine, Product.class);
+                products.add(product);
             }
             br.close();
 
@@ -196,48 +291,6 @@ public class Program {
             System.out.println("File not found");
         }
 
-    }
-
-    public Product parseProductfromString(String str) {
-        String[] array = str.split("[|]+");
-
-        Product product = Factory.getInstance().getProduct(array[0]);
-        product.setNameOfProduct(array[1]);
-        product.setPrice(Double.parseDouble(array[2]));
-        if (product instanceof AliveIndividuals) {
-            ((AliveIndividuals) product).setAliveIndividualsParameters(Integer.parseInt(array[3]), Boolean.parseBoolean(array[4]));
-            if (product instanceof Birds) {
-                ((Birds) product).setBirdsParameters(array[5]);
-                return product;
-            } else if (product instanceof Fish) {
-                ((Fish) product).setFishParameters(Integer.parseInt(array[5]), Boolean.parseBoolean(array[6]));
-                return product;
-            } else if (product instanceof Amphibium) {
-                ((Amphibium) product).setAmphibiumParameters(Boolean.parseBoolean(array[5]), Boolean.parseBoolean(array[6]), Boolean.parseBoolean(array[7]));
-                return product;
-            } else if (product instanceof LittleAnimals) {
-                ((LittleAnimals) product).setAvarageLife(Integer.parseInt(array[5]));
-                return product;
-            } else if (product instanceof Insects) {
-                ((Insects) product).setInsectsparameters(Boolean.parseBoolean(array[5]), Boolean.parseBoolean(array[6]));
-                return product;
-            } else if (product instanceof Spider) {
-                ((Spider) product).setSpidersParameters(Boolean.parseBoolean(array[5]), array[6]);
-                return product;
-            }
-        } else if (product instanceof Stuff) {
-            ((Stuff) product).setCountry(array[3]);
-            if (product instanceof Food) {
-                ((Food) product).setFoodParameters(reader.parseDateFromString(array[5]),
-                        reader.parseDateFromString(array[6]), Boolean.parseBoolean(array[7]), Integer.parseInt(array[8]));
-                return product;
-            } else if (product instanceof Accessories) {
-                ((Accessories) product).setAccessoriesParameters(Double.parseDouble(array[5]), Double.parseDouble(array[6]),
-                        Double.parseDouble(array[7]), Double.parseDouble(array[8]));
-                return product;
-            }
-        }
-        return null;
     }
 
     public User addNewUser() {
@@ -262,8 +315,11 @@ public class Program {
     }
 
     private boolean userVerification(String name, String password) {
+        if (password.length() < 4) {
+            return false;
+        }
         for (User userFromList : users) {
-            if (name.equalsIgnoreCase(userFromList.getUsername()) && password.length() < 3) {//?????
+            if (name.equalsIgnoreCase(userFromList.getUsername())) {
                 return false;
             }
         }
@@ -376,7 +432,7 @@ public class Program {
                 System.out.println("[1]Create new branch");
                 if (shops.size() > 0) {
                     System.out.println("[2]Choose the branch");
-                    avaliable = 2;
+                   avaliable = 2;
                 }
                 answer = reader.usersIntInput();
             } while (answer != 1 && answer != 2);
@@ -394,7 +450,7 @@ public class Program {
                         System.out.println((i + 1) + " " + shops.get(i));
                     }
                     activeBranch = reader.usersIntInput() - 1;
-                } while (activeBranch < 0 && activeBranch >= shops.size());
+                } while (activeBranch < 0 || activeBranch >= shops.size());
             }
         } while (activeBranch == -1);
         return activeBranch;
