@@ -9,12 +9,13 @@ public class User {
     protected String name;
     protected String username;
     protected String password;
-    protected boolean isAdmin=false;
+    protected boolean isAdmin;
     
     public User(String name, String username, String password){
         this.name=name;
     this.username=username;
     this.password=password;
+    this.isAdmin=false;
     }
     public String toString(){
     return new String(getName()+","+getUsername()+","+getPassword());

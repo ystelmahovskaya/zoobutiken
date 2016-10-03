@@ -21,10 +21,10 @@ public class Accessories extends Stuff {
     }
 
     public void setAccessoriesParameters(double weight, double heigh,double length,double width) {
-        this.weight = weight;
-        this.heigh=heigh;
-        this.length=length;
-        this.width=width;
+        this.setWeight(weight);
+        this.setHeigh(heigh);
+        this.setLength(length);
+        this.setWidth(width);
     }
 
     
@@ -43,6 +43,34 @@ public class Accessories extends Stuff {
     }
     public String toString(){
     return new String("Accesories"+"|"+super.toString()+"|"+weight+"|"+heigh+"|"+length+"|"+width);
+    }
+
+    /**
+     * @param weight the weight to set
+     */
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    /**
+     * @param heigh the heigh to set
+     */
+    public void setHeigh(double heigh) {
+        this.heigh = heigh;
+    }
+
+    /**
+     * @param length the length to set
+     */
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    /**
+     * @param width the width to set
+     */
+    public void setWidth(double width) {
+        this.width = width;
     }
     
 }

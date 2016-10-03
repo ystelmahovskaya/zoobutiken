@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="INFO">
     <Appenders>
-        <Console name="CONSOLE" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
-        </Console>     
-        <File name="MyFile" fileName="logs/app.log">
+        <File name="MyFileTrace" fileName="logs/error.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File> 
+         <File name="MyFileInfo" fileName="logs/info.log" append="true">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File> 
     </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="MyFileTrace" />
+        </Root>
+        <Root level="error">
+            <AppenderRef ref="MyFileTrace" />
+        </Root>
+<!--    </Loggers>
     <Loggers>
         <Root level="error">
             <AppenderRef ref="Console" />
         </Root>
        
-        <logger name="javabeat.net.util" level="TRACE" />
+        <logger name="javabeat.net.util" level="trace" />
         <Root level="ERROR">
-            <AppenderRef ref="CONSOLE"/>
-            <appender-ref ref="MyFile" level="error"/>
+           <AppenderRef ref="MyFileTrace"/>
+            <appender-ref ref="MyFileTrace" level="error"/>
         </Root>
          <Root level="TRACE">
-                  <AppenderRef ref="CONSOLE"/>
-            <appender-ref ref="MyFile" level="trace"/>
+             <AppenderRef ref="MyFileTrace"/>    
+            <appender-ref ref="MyFileTrace" level="trace"/>
+        </Root>-->
+        <Root level="INFO">
+            <AppenderRef ref="MyFileInfo"/>     
+            <appender-ref ref="MyFileInfo" level="info"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -1,6 +1,6 @@
 package zoobutiken;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMsg;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 public class Reader {
 
@@ -23,13 +24,16 @@ public class Reader {
         do {
             try {
                 result = scanner.nextInt();
+                if(result<0){
+                System.out.println("Wrong number input, try again");
+            }
 
             } catch (Exception exception) {
                 System.out.println("Wrong data input you need to write a number");
                 result = -1;
-                LOG.trace("Reader.usersIntInput" + exception.getMessage());
+                LOG.error("Reader.usersIntInput" + exception.getMessage());
             }
-            scanner.nextLine();
+            scanner.nextLine();  
         } while (result < 0);
         return result;
     }
@@ -42,7 +46,7 @@ public class Reader {
 
             } catch (Exception exception) {
                 System.out.println("Wrong data input you need to write a number");
-                LOG.trace("Reader.usersIntInput" + exception.getMessage());
+                LOG.error("Reader.usersIntInput" + exception.getMessage());
                 return usersIntInputNegativeIncluded();
             }
             scanner.nextLine();
@@ -55,26 +59,15 @@ public class Reader {
         String s = "";
         do {
             s = scanner.nextLine();
+            if (s.length()==0){
+                System.out.println("You need to write something");
+            }
 
-        } while (s == "");
+        } while (s.length()==0);
         return s;
     }
 
-    public long usersLongInput() {
-
-        long result;
-
-        try {
-            result = scanner.nextLong();
-
-        } catch (Exception exception) {
-            System.out.println("Wrong data input you need to write a number");
-            LOG.trace("Reader.usersLongInput" + exception.getMessage());
-            result = -1;
-        }
-        scanner.nextLine();
-        return result;
-    }
+  
 
     public double usersDoubleInput() {
 
@@ -82,12 +75,16 @@ public class Reader {
         do {
             try {
                 result = scanner.nextDouble();
+                if(result<0){
+                System.out.println("Wrong number input, try again");
+            }
 
             } catch (Exception exception) {
                 System.out.println("Wrong data input you need to write a number");
-                LOG.trace("Reader.usersDoubleInput" + exception.getMessage());
+                LOG.error("Reader.usersDoubleInput " + exception.getMessage());
                 result = -1;
             }
+            
             scanner.nextLine();
         } while (result < 0);
         return result;
@@ -128,7 +125,7 @@ public class Reader {
                 date = format.parse(line);
             } catch (ParseException e) {
                 System.out.println("Sorry, that's not valid. Please try again.");
-                LOG.trace("Reader.usersDateInput" + e.getMessage());
+                LOG.error("Reader.usersDateInput" + e.getMessage());
             }
 
         }
@@ -142,7 +139,7 @@ public class Reader {
             date = format.parse(line);
         } catch (ParseException e) {
 
-            LOG.trace("Reader.parseDateFromString" + e.getMessage());
+            LOG.error("Reader.parseDateFromString" + e.getMessage());
         }
         return date;
     }

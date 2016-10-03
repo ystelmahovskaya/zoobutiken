@@ -4,8 +4,8 @@ package zoobutiken;
 
 public class Fish extends AliveIndividuals{
     
-    private int temperature;
-    private boolean liveInSaltWater;
+    protected int temperature;
+    protected boolean liveInSaltWater;
 
 //    public Fish(String breed, int age, boolean isPredator,int temperature, boolean liveInSaltWater) {
 //        super(breed, age, isPredator);
@@ -24,12 +24,26 @@ public class Fish extends AliveIndividuals{
 
     
     public void setFishParameters(int temperature,boolean liveInSaltWater) {
-        this.temperature = temperature;
-        this.liveInSaltWater = liveInSaltWater;
+        this.setTemperature(temperature);
+        this.setLiveInSaltWater(liveInSaltWater);
     }
     
      public String toString(){
     return new String("Fish"+"|"+super.toString()+"|"+temperature+"|"+liveInSaltWater);
+    }
+
+    /**
+     * @param temperature the temperature to set
+     */
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    /**
+     * @param liveInSaltWater the liveInSaltWater to set
+     */
+    public void setLiveInSaltWater(boolean liveInSaltWater) {
+        this.liveInSaltWater = liveInSaltWater;
     }
     
     

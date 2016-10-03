@@ -28,10 +28,10 @@ public class Food extends Stuff {
 
     
     public void setFoodParameters(Date produced,Date expirationDate,boolean isAlive,int temperature) {
-        this.produced = produced;
-         this.expirationDate = expirationDate;
+        this.setProduced(produced);
+        this.setExpirationDate(expirationDate);
          this.isAlive = isAlive;
-           this.temperature = temperature;
+         this.setTemperature(temperature);
     }
 
     
@@ -50,7 +50,35 @@ public class Food extends Stuff {
        public String toString(){
            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
            
-    return new String("Food"+"|"+super.toString()+"|"+format.format(getProduced()) +"|"+format.format(getExpirationDate())+"|"+isAlive+"|"+temperature);
+    return new String("Food"+"|"+super.toString()+"|"+format.format(getProduced()) +"|"+format.format(getExpirationDate())+"|"+isIsAlive()+"|"+temperature);
+    }
+
+    /**
+     * @param produced the produced to set
+     */
+    public void setProduced(Date produced) {
+        this.produced = produced;
+    }
+
+    /**
+     * @param expirationDate the expirationDate to set
+     */
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    /**
+     * @return the isAlive
+     */
+    public boolean isIsAlive() {
+        return isAlive;
+    }
+
+    /**
+     * @param temperature the temperature to set
+     */
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
     }
     
 }

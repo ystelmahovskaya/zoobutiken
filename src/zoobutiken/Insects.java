@@ -3,8 +3,8 @@ package zoobutiken;
 
 
 public class Insects extends AliveIndividuals {
-    private boolean venomous;
-     private boolean flying;
+    protected boolean venomous;
+     protected boolean flying;
 
 //    public Insects(String breed, int age, boolean isPredator, boolean venomous,boolean flying) {
 //        super(breed, age, isPredator);
@@ -19,8 +19,8 @@ public class Insects extends AliveIndividuals {
 
    
     public void setInsectsparameters(boolean venomous,boolean flying) {
-        this.venomous = venomous;
-        this.flying = flying;
+        this.setVenomous(venomous);
+        this.setFlying(flying);
     }
 
     
@@ -30,6 +30,20 @@ public class Insects extends AliveIndividuals {
     
      public String toString(){
     return new String("Insect"+"|"+super.toString()+"|"+venomous+"|"+flying);
+    }
+
+    /**
+     * @param venomous the venomous to set
+     */
+    public void setVenomous(boolean venomous) {
+        this.venomous = venomous;
+    }
+
+    /**
+     * @param flying the flying to set
+     */
+    public void setFlying(boolean flying) {
+        this.flying = flying;
     }
 
     

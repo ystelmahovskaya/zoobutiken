@@ -22,7 +22,7 @@ public abstract class AliveIndividuals implements Product {
 //    }
     
     public String toString(){
-    return new String(getNameOfProduct()+"|"+price+"|"+age+"|"+isPredator);
+    return new String(getNameOfProduct()+"|"+price+"|"+age+"|"+isIsPredator());
     }
 
     /**
@@ -44,13 +44,13 @@ public abstract class AliveIndividuals implements Product {
 
    
     public void setAliveIndividualsParameters(int age, boolean isPredator) {
-        this.age = age;
-         this.isPredator = isPredator;
+        this.setAge(age);
+        this.setIsPredator(isPredator);
     }
 
     
     public boolean isPredator() {
-        return isPredator;
+        return isIsPredator();
     }
 
     
@@ -61,6 +61,27 @@ public abstract class AliveIndividuals implements Product {
     
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    /**
+     * @param age the age to set
+     */
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    /**
+     * @return the isPredator
+     */
+    public boolean isIsPredator() {
+        return isPredator;
+    }
+
+    /**
+     * @param isPredator the isPredator to set
+     */
+    public void setIsPredator(boolean isPredator) {
+        this.isPredator = isPredator;
     }
 
     

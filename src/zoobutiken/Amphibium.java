@@ -4,9 +4,9 @@ package zoobutiken;
 
 public class Amphibium extends AliveIndividuals {
     
-    private boolean venomous;
-    private boolean poison;
-    private boolean liveInSaltWater; 
+    protected boolean venomous;
+    protected boolean poison;
+    protected boolean liveInSaltWater; 
 
 //    public Amphibium(String breed, int age, boolean isPredator,boolean venomous,boolean poison,boolean liveInSaltWater) {
 //        super(breed, age, isPredator);
@@ -22,9 +22,9 @@ public class Amphibium extends AliveIndividuals {
 
     
     public void setAmphibiumParameters(boolean venomous,boolean poison,boolean liveInSaltWater) {
-        this.venomous = venomous;
-         this.poison = poison;
-         this.liveInSaltWater = liveInSaltWater;
+        this.setVenomous(venomous);
+        this.setPoison(poison);
+        this.setLiveInSaltWater(liveInSaltWater);
     }
 
     
@@ -37,6 +37,27 @@ public class Amphibium extends AliveIndividuals {
     }
     public String toString(){
     return new String("Fish"+"|"+super.toString()+"|"+venomous+"|"+poison+"|"+liveInSaltWater);
+    }
+
+    /**
+     * @param venomous the venomous to set
+     */
+    public void setVenomous(boolean venomous) {
+        this.venomous = venomous;
+    }
+
+    /**
+     * @param poison the poison to set
+     */
+    public void setPoison(boolean poison) {
+        this.poison = poison;
+    }
+
+    /**
+     * @param liveInSaltWater the liveInSaltWater to set
+     */
+    public void setLiveInSaltWater(boolean liveInSaltWater) {
+        this.liveInSaltWater = liveInSaltWater;
     }
     
 }

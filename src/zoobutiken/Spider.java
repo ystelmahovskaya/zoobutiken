@@ -3,8 +3,8 @@ package zoobutiken;
 
 
 public class Spider extends AliveIndividuals {
-    private boolean venomous;
-   private String habitat;
+    protected boolean venomous;
+   protected String habitat;
 
 //    public Spider(String breed, int age, boolean isPredator, boolean venomous,String habitat) {
 //        super(breed, age, isPredator);
@@ -19,8 +19,8 @@ public class Spider extends AliveIndividuals {
 
     
     public void setSpidersParameters(boolean venomous,String habitat) {
-        this.venomous = venomous;
-        this.habitat = habitat;
+        this.setVenomous(venomous);
+        this.setHabitat(habitat);
     }
 
     
@@ -29,6 +29,20 @@ public class Spider extends AliveIndividuals {
     }
     public String toString(){
     return new String("Spider"+"|"+super.toString()+"|"+venomous+"|"+habitat);
+    }
+
+    /**
+     * @param venomous the venomous to set
+     */
+    public void setVenomous(boolean venomous) {
+        this.venomous = venomous;
+    }
+
+    /**
+     * @param habitat the habitat to set
+     */
+    public void setHabitat(String habitat) {
+        this.habitat = habitat;
     }
 
 }
