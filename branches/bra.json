@@ -1,2 +1,8 @@
 {"type":"Birds","species":"qq","nameOfProduct":"qq","price":1.0,"age":2,"isPredator":true}
 {"type":"Food","produced":"Jan 1, 2016 12:00:00 AM","expirationDate":"Feb 2, 2017 12:00:00 AM","isAlive":false,"temperature":-14,"nameOfProduct":"beef","price":0.23,"country":"se"}
+{"type":"Birds","species":"ww","nameOfProduct":"","price":1.0,"age":23,"isPredator":true}
+{"type":"Fish","temperature":1,"liveInSaltWater":false,"nameOfProduct":"","price":12.1,"age":2,"isPredator":false}
+{"type":"Amphibium","venomous":false,"poison":false,"liveInSaltWater":false,"nameOfProduct":"lisard","price":11.0,"age":1,"isPredator":true}
+{"type":"Accessories","weight":1.0,"heigh":1.0,"length":1.0,"width":1.0,"nameOfProduct":"akhsfdkas","price":11.0,"country":"1"}
+{"type":"Food","produced":"Oct 1, 2016 12:00:00 AM","expirationDate":"Oct 2, 2016 12:00:00 AM","isAlive":false,"temperature":1,"nameOfProduct":"meat","price":12.0,"country":"se"}
+{"type":"Fish","temperature":23,"liveInSaltWater":true,"nameOfProduct":"fifi","price":12.0,"age":1,"isPredator":true}

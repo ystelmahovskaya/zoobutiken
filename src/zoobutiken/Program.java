@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,7 +20,7 @@ public class Program {
 
     protected List<Shop> shops = new ArrayList<Shop>();
     protected List<User> users = new ArrayList<User>();
-    boolean admin = true;
+    boolean admin =false;
     Reader reader = new Reader();
     Gson gsonUser = new Gson();
     final RuntimeTypeAdapterFactory<Product> adapter
@@ -50,7 +50,7 @@ public class Program {
         boolean isAuthorized = false;
         do {
 
-            if (users.size() == 0) {
+            if (users.isEmpty()) {
                 do {
                     System.out.println("[1]Create admin user");
                     System.out.println("[0]Quit");
@@ -63,10 +63,10 @@ public class Program {
                     run = false;
                 } else if (answer == 1) {
                     admin = true;
-                    addUser();
+                    addUser(addNewUser());
                     users.get(0).setIsAdmin(true);
                     System.out.println("is admin: " + users.get(0).isAdmin);
-                    saveUsersToFile();
+                    saveUsersToFile("users.json");
                     isAuthorized = true;
                 }
             }
@@ -84,7 +84,11 @@ public class Program {
                 if (answer == 0) {
                     run = false;
                 } else if (answer == 1) {
-                    isAuthorized = login();
+                    System.out.println("Write your username");
+                    String username = reader.usersStringInput();
+                    System.out.println("Write your password");
+                    String password = reader.usersStringInput();
+                    isAuthorized = login(username, password);
                 }
             }
             answer = -1;
@@ -97,7 +101,7 @@ public class Program {
                 do {
                     System.out.println("[1]Print the list of products");
                     System.out.println("[2]Add new product");
-                    System.out.println("[3]Change the price");
+                    System.out.println("[3]Update item");
                     System.out.println("[4]Sort by product's name");
                     System.out.println("[5]Sort by product's price");
                     System.out.println("[6]Sort by product's type");
@@ -118,26 +122,61 @@ public class Program {
                         && answer != 11 && answer != 12 && answer != 13 && answer != 14
                         && answer != 0);
                 if (answer == 1) {
-                    print();
+                    print1();
                 } else if (answer == 2) {
-                    shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard());
+                    int answer2 = -1;
+
+                    do {
+                        System.out.println("Choose the type of product which do you want to add. Write the number.");
+                        for (int i = 0; i < types.length; i++) {
+                            System.out.println((i + 1) + " " + types[i]);
+                        }
+                        answer = reader.usersIntInput() - 1;
+                    } while (answer < 0 && answer > types.length);
+                    shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard(answer2));
                     printToFile();
+                } else if (answer == 3) {
+                    changeItem();
                 } else if (answer == 7) {
-                    searchingByName();
+                    System.out.println("Write the name of the product which do you want to find");
+                    String name = reader.usersStringInput();
+                    printList(searchingByName(name));
                 } else if (answer == 8) {
-                    searchingByPrice();
+                      System.out.println("Write the price of the product which do you want to find");
+        double price = reader.usersDoubleInput();
+                    printList( searchingByPrice(price));
                 } else if (answer == 9) {
-                    searchingByType();
+                    System.out.println("Choose the type which do you want to find");
+        int answer9 = -1;
+         do {
+
+            for (int i = 0; i < types.length; i++) {
+                System.out.println((i + 1) + " " + types[i]);
+            }
+            answer9 = reader.usersIntInput() - 1;
+        } while (answer9 < 0 && answer9 > types.length);
+                    printList(   searchingByType(answer9));
                 } else if (answer == 10) {
-                    deleteItem();
+                    print1();
+                    System.out.println("Write the number in the list which do you want to remove");
+                    int index = reader.usersIntInput() - 1;
+                    deleteItem(index, activeBranch);
+                    printToFile();
                 } else if (answer == 11) {
                     printToFile();
                     activeBranch = -1;
                     activeBranch = branchChoice();
                 } else if (answer == 12) {
-                    addUser();
+                    addUser(addNewUser());
+                    saveUsersToFile("users.json");
                 } else if (answer == 13) {
-                    deleteUser();
+                    System.out.println("Choose the user which do you want to delete from users' list");
+                    for (int i = 0; i < users.size(); i++) {
+                        System.out.println((i + 1) + " " + users.get(i));
+                    }
+                    int index = reader.usersIntInput() - 1;
+                    deleteUser(admin, index);
+                     saveUsersToFile("users.json");
                 } else if (answer == 14) {
                     updateUser();
                 } else if (answer == 0) {
@@ -149,24 +188,20 @@ public class Program {
         } while (run);
     }
 
-    public void deleteItem() throws IOException {
-        print1();
-        System.out.println("Write the number in the list which do you want to remove");
-        int index = reader.usersIntInput() - 1;
-        if (index > 0 && index < shops.get(activeBranch).getListOfProducts().size()) {
+    public void deleteItem(int index, int activeBranch) throws IOException {
+
+        if (index >= 0 && index < shops.get(activeBranch).getListOfProducts().size()) {
             shops.get(activeBranch).getListOfProducts().remove(index);
-            printToFile();
+
         } else {
             System.out.println("Wrong number try again");
         }
 
     }
 
-    public void addUser() throws IOException {
+    public void addUser(User user) throws IOException {
         if (admin) {
-            User user = addNewUser();
             users.add(user);
-            saveUsersToFile();
         } else {
             System.out.println("you have no admin rights");
         }
@@ -205,27 +240,20 @@ public class Program {
         return true;
     }
 
-    public void deleteUser() throws IOException {
+    public void deleteUser(boolean admin, int index) throws IOException {
         if (admin) {
-            System.out.println("Choose the user which do you want to delete from users' list");
-            for (int i = 0; i < users.size(); i++) {
-                System.out.println((i + 1) + " " + users.get(i));
-            }
-            int index = reader.usersIntInput() - 1;
+
             if (index >= 0 && index < users.size()) {
                 users.remove(index);
             }
-            saveUsersToFile();
+           
         } else {
             System.out.println("you don't have admin rights");
         }
     }
 
-    public boolean login() {
-        System.out.println("Write your username");
-        String username = reader.usersStringInput();
-        System.out.println("Write your password");
-        String password = reader.usersStringInput();
+    public boolean login(String username, String password) {
+
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 if (user.isAdmin == true) {
@@ -291,15 +319,15 @@ public class Program {
                     System.out.println("do you want to give admin rights to this user? Y/N");
                     users.get(index).setIsAdmin(reader.YN_UsersAnswer());
                 }
-                saveUsersToFile();
+                saveUsersToFile("users.json");
             }
         } else {
             System.out.println("you don't have admin rights");
         }
     }
 
-    public void saveUsersToFile() throws IOException {
-        FileWriter fw = new FileWriter("users.json", false);
+    public void saveUsersToFile(String fileName) throws IOException {
+        FileWriter fw = new FileWriter(fileName);
         BufferedWriter bfw = new BufferedWriter(fw);
         for (User user : users) {
             String userJson = gsonUser.toJson(user);
@@ -309,57 +337,52 @@ public class Program {
         bfw.close();
     }
 
-    public void searchingByName() {
-        System.out.println("Write the name of the product which do you want to find");
-        String name = reader.usersStringInput();
-        int counter = 0;
+    public List<Product> searchingByName(String name) {
+
+        List<Product> sorted = new ArrayList<Product>();
+    
         for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
             if (shops.get(activeBranch).getListOfProducts().get(i).getNameOfProduct().equalsIgnoreCase(name)) {
-                counter++;
-                System.out.println(counter + " " + shops.get(activeBranch).getListOfProducts().get(i));
+                
+                sorted.add(shops.get(activeBranch).getListOfProducts().get(i));
             }
         }
-        if (counter == 0) {
+        if (sorted.size()==0) {
             System.out.println("No matches found");
         }
+        return sorted;
     }
 
-    public void searchingByPrice() {
-        System.out.println("Write the price of the product which do you want to find");
-        double price = reader.usersDoubleInput();
-        int counter = 0;
+    public  List<Product> searchingByPrice(double price) {
+      
+      List<Product> sorted = new ArrayList<Product>();
         for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
             if (shops.get(activeBranch).getListOfProducts().get(i).getPrice() == price) {
-                counter++;
-                System.out.println(counter + " " + shops.get(activeBranch).getListOfProducts().get(i));
+               
+                sorted.add(shops.get(activeBranch).getListOfProducts().get(i));
             }
         }
-        if (counter == 0) {
+        if (sorted.size()==0) {
             System.out.println("No matches found");
         }
+        return sorted;
     }
 
-    public void searchingByType() {
-        System.out.println("Choose the type which do you want to find");
-        int answer = -1;
-        int counter = 0;
-        do {
-
-            for (int i = 0; i < types.length; i++) {
-                System.out.println((i + 1) + " " + types[i]);
-            }
-            answer = reader.usersIntInput() - 1;
-        } while (answer < 0 && answer > types.length);
+    public List<Product> searchingByType(int answer) {
+        
+       List<Product> sorted = new ArrayList<Product>();
+       
         for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
             if (shops.get(activeBranch).getListOfProducts().get(i).getClass().toString().contains(types[answer])) {
-                counter++;
-                System.out.println(counter + " " + shops.get(activeBranch).getListOfProducts().get(i));
+                
+               sorted.add( shops.get(activeBranch).getListOfProducts().get(i));
 
             }
         }
-        if (counter == 0) {
+        if (sorted.size()==0) {
             System.out.println("No matches found");
         }
+        return sorted;
     }
 
     public void printToFile() throws IOException {
@@ -385,8 +408,8 @@ public class Program {
 //        }
     }
 
-    public void print() {
-        for (Product product : shops.get(activeBranch).listOfProducts) {
+    public void printList(List<Product> products) {
+        for (Product product : products) {
             System.out.println(product);
         }
     }
@@ -414,7 +437,7 @@ public class Program {
                     if (listOfFiles[i].isFile() && listOfFiles[i].getName().contains("branch_")) {
                         System.out.println(listOfFiles[i].getName());
                         Shop shop = new Shop(listOfFiles[i].getName().substring(7, listOfFiles[i].getName().length() - 5));
-                        populateListFromFile(shop.getListOfProducts(), listOfFiles[i].getAbsolutePath());
+                        shop.setListOfProducts(populateListFromFile(listOfFiles[i].getAbsolutePath()));
                         shops.add(shop);
 
                     }
@@ -426,8 +449,8 @@ public class Program {
         }
     }
 
-    public void populateListFromFile(List<Product> products, String filename) throws IOException {
-
+    public List<Product> populateListFromFile(String filename) throws IOException {
+        List<Product> products = new ArrayList<Product>();
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
             String strLine;
@@ -441,19 +464,11 @@ public class Program {
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
-
+        return products;
     }
 
-    public Product addProductFromKeyboard() {
-        int answer = -1;
+    public Product addProductFromKeyboard(int answer) {
 
-        do {
-            System.out.println("Choose the type of product which do you want to add. Write the number.");
-            for (int i = 0; i < types.length; i++) {
-                System.out.println((i + 1) + " " + types[i]);
-            }
-            answer = reader.usersIntInput() - 1;
-        } while (answer < 0 && answer > types.length);
         Product product = Factory.getInstance().getProduct(types[answer]);
         System.out.println("Write the name of the product");
         String name = reader.usersStringInput();
@@ -538,7 +553,7 @@ public class Program {
             }
         }
 
-        return addProductFromKeyboard();
+        return addProductFromKeyboard(answer);
 
     }
 
@@ -581,7 +596,7 @@ public class Program {
     public void changeItem() {
         print1();
         System.out.println("Choose the item");
-        int index = reader.usersIntInput();
+        int index = reader.usersIntInput() - 1;
         if (index >= 0 && index < shops.get(activeBranch).getListOfProducts().size()) {
             if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Product) {
                 System.out.println("The current name is" + shops.get(activeBranch).getListOfProducts().get(index).getNameOfProduct());

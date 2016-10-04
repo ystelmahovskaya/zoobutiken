@@ -1,3 +1,2 @@
-{"name":"admin","username":"admin","password":"admin","isAdmin":false}
-{"name":"yulia","username":"yulia","password":"1234","isAdmin":false}
-{"name":"qwer","username":"1212","password":"12345","isAdmin":false}
+{"name":"admin","username":"admin","password":"1234","isAdmin":true}
+{"name":"user","username":"user","password":"user","isAdmin":false}

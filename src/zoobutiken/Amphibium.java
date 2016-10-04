@@ -36,7 +36,7 @@ public class Amphibium extends AliveIndividuals {
         return liveInSaltWater;
     }
     public String toString(){
-    return new String("Fish"+"|"+super.toString()+"|"+venomous+"|"+poison+"|"+liveInSaltWater);
+    return new String("Amphibium"+"|"+super.toString()+"|"+venomous+"|"+poison+"|"+liveInSaltWater);
     }
 
     /**

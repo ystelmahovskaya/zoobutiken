@@ -24,6 +24,10 @@ public class Shop {
         return listOfProducts;
     }
 
+        public void setListOfProducts(List <Product> products) {
+        listOfProducts = products;
+    }
+
     public String getBranchName() {
         return branchName;
     }
