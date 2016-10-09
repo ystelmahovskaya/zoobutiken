@@ -9,12 +9,6 @@ public class Accessories extends Stuff {
     protected double length;
     protected double width;
     
-
-//    public Accessories(String name, double price,double weight ) {
-//        super(name, price);
-//        this.weight=weight;
-//    }
-
     
     public double getWeight() {
         return weight;

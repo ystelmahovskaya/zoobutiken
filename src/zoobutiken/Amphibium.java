@@ -8,13 +8,6 @@ public class Amphibium extends AliveIndividuals {
     protected boolean poison;
     protected boolean liveInSaltWater; 
 
-//    public Amphibium(String breed, int age, boolean isPredator,boolean venomous,boolean poison,boolean liveInSaltWater) {
-//        super(breed, age, isPredator);
-//        this.venomous=venomous;
-//        this.poison=this.poison;
-//        this.liveInSaltWater=liveInSaltWater;
-//    }
-
  
     public boolean isVenomous() {
         return venomous;

@@ -13,14 +13,6 @@ public class Food extends Stuff {
     protected boolean isAlive;
     protected int temperature;
 
-//    public Food(String name, double price,  Date produced,Date expirationDate,boolean isAlive,int temperature) {
-//        super(name, price);
-//        this.produced=produced;
-//        this.expirationDate=expirationDate;
-//        this.isAlive=isAlive;
-//        this.temperature=temperature;
-//    }
-
     
     public Date getProduced() {
         return produced;

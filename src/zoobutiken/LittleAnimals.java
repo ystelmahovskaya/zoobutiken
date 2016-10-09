@@ -4,13 +4,7 @@ package zoobutiken;
 
 public class LittleAnimals extends AliveIndividuals {
    private int avarageLife;
-
-//    public LittleAnimals(String breed, int age, boolean isPredator,int avarageLife) {
-//        super(breed, age, isPredator);
-//        this.avarageLife=avarageLife;
-//    }
-
-    
+  
     public int getAvarageLife() {
         return avarageLife;
     }

@@ -15,6 +15,8 @@ public class Reader {
 
     private static final Logger LOG = LogManager.getLogger(Reader.class);
 
+    
+
     Scanner scanner = new Scanner(System.in);
 
 //    encapsulation of users input 

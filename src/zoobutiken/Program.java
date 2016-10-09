@@ -17,7 +17,7 @@ import com.google.gson.GsonBuilder;
 import java.util.Collections;
 import java.util.Comparator;
 
-//import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
+import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 public class Program {
 
     protected List<Shop> shops = new ArrayList<Shop>();
@@ -46,7 +46,6 @@ public class Program {
 
     public void run() throws IOException {
         boolean run = true;
-        //Scanner scanner = new Scanner(System.in);
         int answer;
 
         boolean isAuthorized = false;
@@ -133,8 +132,8 @@ public class Program {
                         for (int i = 0; i < types.length; i++) {
                             System.out.println((i + 1) + " " + types[i]);
                         }
-                        answer = reader.usersIntInput() - 1;
-                    } while (answer < 0 && answer > types.length);
+                        answer2 = reader.usersIntInput() - 1;
+                    } while (answer2 < 0 && answer2 > types.length);
                     shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard(answer2));
                     printToFile();
                 } else if (answer == 3) {
@@ -311,21 +310,21 @@ public class Program {
             }
             int index = reader.usersIntInput() - 1;
             if (index >= 0 && index < users.size()) {
-                System.out.println("The current name is" + users.get(index).getName());
+                System.out.println("The current name is " + users.get(index).getName());
                 System.out.println("do you want to change it? Y/N");
                 boolean answer = reader.YN_UsersAnswer();
                 if (answer) {
-                    System.out.println("Write the new name");
+                    System.out.println("Write the new name ");
                     users.get(index).setName(reader.usersStringInput());
                 }
-                System.out.println("The username name is" + users.get(index).getUsername());
+                System.out.println("The username name is " + users.get(index).getUsername());
                 System.out.println("do you want to change it? Y/N");
                 answer = reader.YN_UsersAnswer();
                 if (answer) {
                     System.out.println("Write the new username");
                     users.get(index).setUsername(reader.usersStringInput());
                 }
-                System.out.println("The password is" + users.get(index).getPassword());
+                System.out.println("The password is " + users.get(index).getPassword());
                 System.out.println("do you want to change it? Y/N");
                 answer = reader.YN_UsersAnswer();
                 if (answer) {
@@ -409,7 +408,7 @@ public class Program {
 
         String filename = "branch_" + shops.get(activeBranch).getBranchName() + ".json";
         String folder = currentUsersHomeDir + File.separator + "branches" + File.separator;
-        //try {
+        
         File f = new File(folder);
         if (f != null) {
             f.mkdirs();
@@ -423,9 +422,6 @@ public class Program {
             bfw.newLine();
         }
         bfw.close();
-//        } catch (Exception e) {
-//            System.out.println("File writing error");
-//        }
     }
 
     public void printList(List<Product> products) {
@@ -445,17 +441,14 @@ public class Program {
         try {
 
             File folder = new File(currentUsersHomeDir + File.separator + "branches" + File.separator);
-
             File listOfFiles[] = folder.listFiles();
             if (listOfFiles != null) {
-                System.out.println(folder.listFiles());
                 for (File file : listOfFiles) {
                     System.out.println(file);
                 }
 
                 for (int i = 0; i < listOfFiles.length; i++) {
                     if (listOfFiles[i].isFile() && listOfFiles[i].getName().contains("branch_")) {
-                        System.out.println(listOfFiles[i].getName());
                         Shop shop = new Shop(listOfFiles[i].getName().substring(7, listOfFiles[i].getName().length() - 5));
                         shop.setListOfProducts(populateListFromFile(listOfFiles[i].getAbsolutePath()));
                         shops.add(shop);
@@ -619,14 +612,14 @@ public class Program {
         int index = reader.usersIntInput() - 1;
         if (index >= 0 && index < shops.get(activeBranch).getListOfProducts().size()) {
             if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Product) {
-                System.out.println("The current name is" + shops.get(activeBranch).getListOfProducts().get(index).getNameOfProduct());
+                System.out.println("The current name is " + shops.get(activeBranch).getListOfProducts().get(index).getNameOfProduct());
                 System.out.println("do you want to change it? Y/N");
                 boolean answer = reader.YN_UsersAnswer();
                 if (answer) {
-                    System.out.println("Write the new name");
+                    System.out.println("Write the new name ");
                     shops.get(activeBranch).getListOfProducts().get(index).setNameOfProduct(reader.usersStringInput());
                 }
-                System.out.println("The current price is" + shops.get(activeBranch).getListOfProducts().get(index).getPrice());
+                System.out.println("The current price is " + shops.get(activeBranch).getListOfProducts().get(index).getPrice());
                 System.out.println("do you want to change it? Y/N");
                 answer = reader.YN_UsersAnswer();
                 if (answer) {
@@ -635,7 +628,7 @@ public class Program {
                 }
 
                 if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Stuff) {
-                    System.out.println("The current producer country is" + ((Stuff) shops.get(activeBranch).getListOfProducts().get(index)).getCountry());
+                    System.out.println("The current producer country is " + ((Stuff) shops.get(activeBranch).getListOfProducts().get(index)).getCountry());
                     System.out.println("do you want to change it? Y/N");
                     answer = reader.YN_UsersAnswer();
                     if (answer) {
@@ -643,28 +636,28 @@ public class Program {
                         ((Stuff) shops.get(activeBranch).getListOfProducts().get(index)).setCountry(reader.usersStringInput());
                     }
                     if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Accessories) {
-                        System.out.println("The current weight is" + ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).getWeight());
+                        System.out.println("The current weight is " + ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).getWeight());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
                             System.out.println("Write the new weight");
                             ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).setWeight(reader.usersDoubleInput());
                         }
-                        System.out.println("The current width is" + ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).width);
+                        System.out.println("The current width is " + ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).width);
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
                             System.out.println("Write the new width");
                             ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).setWidth(reader.usersDoubleInput());
                         }
-                        System.out.println("The current heigh is" + ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).getHeigh());
+                        System.out.println("The current heigh is " + ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).getHeigh());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
                             System.out.println("Write the new heigh");
                             ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).setHeigh(reader.usersDoubleInput());
                         }
-                        System.out.println("The current length is" + ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).getLength());
+                        System.out.println("The current length is " + ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).getLength());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -672,28 +665,28 @@ public class Program {
                             ((Accessories) shops.get(activeBranch).getListOfProducts().get(index)).setLength(reader.usersDoubleInput());
                         }
                     } else if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Food) {
-                        System.out.println("The current produced date is" + ((Food) shops.get(activeBranch).getListOfProducts().get(index)).getProduced());
+                        System.out.println("The current produced date is " + ((Food) shops.get(activeBranch).getListOfProducts().get(index)).getProduced());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
                             System.out.println("Write the new date");
                             ((Food) shops.get(activeBranch).getListOfProducts().get(index)).setProduced(reader.usersDateInput());
                         }
-                        System.out.println("The current exp date is" + ((Food) shops.get(activeBranch).getListOfProducts().get(index)).getExpirationDate());
+                        System.out.println("The current exp date is " + ((Food) shops.get(activeBranch).getListOfProducts().get(index)).getExpirationDate());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
                             System.out.println("Write the new date");
                             ((Food) shops.get(activeBranch).getListOfProducts().get(index)).setExpirationDate(reader.usersDateInput());
                         }
-                        System.out.println("Now is alive" + ((Food) shops.get(activeBranch).getListOfProducts().get(index)).isIsAlive());
+                        System.out.println("Now is alive " + ((Food) shops.get(activeBranch).getListOfProducts().get(index)).isIsAlive());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
                             System.out.println("is it alive? Y/N");
                             ((Food) shops.get(activeBranch).getListOfProducts().get(index)).setIsAlive(reader.YN_UsersAnswer());
                         }
-                        System.out.println("Current temperature for keeping is" + ((Food) shops.get(activeBranch).getListOfProducts().get(index)).getTemperature());
+                        System.out.println("Current temperature for keeping is " + ((Food) shops.get(activeBranch).getListOfProducts().get(index)).getTemperature());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -703,7 +696,7 @@ public class Program {
 
                     }
                 } else if (shops.get(activeBranch).getListOfProducts().get(index) instanceof AliveIndividuals) {
-                    System.out.println("The current age is" + ((AliveIndividuals) shops.get(activeBranch).getListOfProducts().get(index)).getAge());
+                    System.out.println("The current age is " + ((AliveIndividuals) shops.get(activeBranch).getListOfProducts().get(index)).getAge());
                     System.out.println("do you want to change it? Y/N");
                     answer = reader.YN_UsersAnswer();
                     if (answer) {
@@ -711,17 +704,17 @@ public class Program {
                         ((AliveIndividuals) shops.get(activeBranch).getListOfProducts().get(index)).setAge(reader.usersIntInput());
                     }
 
-                    System.out.println("This is a predator" + ((AliveIndividuals) shops.get(activeBranch).getListOfProducts().get(index)).isIsPredator());
+                    System.out.println("This is a predator " + ((AliveIndividuals) shops.get(activeBranch).getListOfProducts().get(index)).isIsPredator());
                     System.out.println("do you want to change it? Y/N");
                     answer = reader.YN_UsersAnswer();
                     if (answer) {
-                        System.out.println("is it a predator?");
+                        System.out.println("is it a predator? Y/N");
                         ((AliveIndividuals) shops.get(activeBranch).getListOfProducts().get(index)).setIsPredator(reader.YN_UsersAnswer());
                     }
 
                     if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Birds) {
 
-                        System.out.println("The current species is" + ((Birds) shops.get(activeBranch).getListOfProducts().get(index)).getSpecies());
+                        System.out.println("The current species is " + ((Birds) shops.get(activeBranch).getListOfProducts().get(index)).getSpecies());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -729,14 +722,14 @@ public class Program {
                             ((Birds) shops.get(activeBranch).getListOfProducts().get(index)).setBirdsParameters(reader.usersStringInput());
                         }
                     } else if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Amphibium) {
-                        System.out.println("This is venomous" + ((Amphibium) shops.get(activeBranch).getListOfProducts().get(index)).isVenomous());
+                        System.out.println("This is venomous " + ((Amphibium) shops.get(activeBranch).getListOfProducts().get(index)).isVenomous());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
                             System.out.println("is it venomous? Y/N");
                             ((Amphibium) shops.get(activeBranch).getListOfProducts().get(index)).setVenomous(reader.YN_UsersAnswer());
                         }
-                        System.out.println("This is poisonous" + ((Amphibium) shops.get(activeBranch).getListOfProducts().get(index)).isPoison());
+                        System.out.println("This is poisonous " + ((Amphibium) shops.get(activeBranch).getListOfProducts().get(index)).isPoison());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -744,7 +737,7 @@ public class Program {
                             ((Amphibium) shops.get(activeBranch).getListOfProducts().get(index)).setPoison(reader.YN_UsersAnswer());
                         }
 
-                        System.out.println("lives in salt water" + ((Amphibium) shops.get(activeBranch).getListOfProducts().get(index)).isLiveInSaltWater());
+                        System.out.println("lives in salt water " + ((Amphibium) shops.get(activeBranch).getListOfProducts().get(index)).isLiveInSaltWater());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -753,7 +746,7 @@ public class Program {
                         }
                     } else if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Fish) {
 
-                        System.out.println("Current temperature is" + ((Fish) shops.get(activeBranch).getListOfProducts().get(index)).getTemperature());
+                        System.out.println("Current temperature is " + ((Fish) shops.get(activeBranch).getListOfProducts().get(index)).getTemperature());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -761,7 +754,7 @@ public class Program {
                             ((Fish) shops.get(activeBranch).getListOfProducts().get(index)).setTemperature(reader.usersIntInput());
                         }
 
-                        System.out.println("lives in salt water" + ((Fish) shops.get(activeBranch).getListOfProducts().get(index)).isLiveInSaltWater());
+                        System.out.println("lives in salt water " + ((Fish) shops.get(activeBranch).getListOfProducts().get(index)).isLiveInSaltWater());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -769,14 +762,14 @@ public class Program {
                             ((Fish) shops.get(activeBranch).getListOfProducts().get(index)).setLiveInSaltWater(reader.YN_UsersAnswer());
                         }
                     } else if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Insects) {
-                        System.out.println("This is venomous" + ((Insects) shops.get(activeBranch).getListOfProducts().get(index)).isVenomous());
+                        System.out.println("This is venomous " + ((Insects) shops.get(activeBranch).getListOfProducts().get(index)).isVenomous());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
                             System.out.println("is it venomous? Y/N");
                             ((Insects) shops.get(activeBranch).getListOfProducts().get(index)).setVenomous(reader.YN_UsersAnswer());
                         }
-                        System.out.println("It can fly" + ((Insects) shops.get(activeBranch).getListOfProducts().get(index)).isFlying());
+                        System.out.println("It can fly " + ((Insects) shops.get(activeBranch).getListOfProducts().get(index)).isFlying());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -792,7 +785,7 @@ public class Program {
                             ((LittleAnimals) shops.get(activeBranch).getListOfProducts().get(index)).setAvarageLife(reader.usersIntInput());
                         }
                     } else if (shops.get(activeBranch).getListOfProducts().get(index) instanceof Spider) {
-                        System.out.println("This is venomous" + ((Spider) shops.get(activeBranch).getListOfProducts().get(index)).isVenomous());
+                        System.out.println("This is venomous " + ((Spider) shops.get(activeBranch).getListOfProducts().get(index)).isVenomous());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {
@@ -800,7 +793,7 @@ public class Program {
                             ((Spider) shops.get(activeBranch).getListOfProducts().get(index)).setVenomous(reader.YN_UsersAnswer());
                         }
 
-                        System.out.println("The current habitat is" + ((Spider) shops.get(activeBranch).getListOfProducts().get(index)).getHabitat());
+                        System.out.println("The current habitat is " + ((Spider) shops.get(activeBranch).getListOfProducts().get(index)).getHabitat());
                         System.out.println("do you want to change it? Y/N");
                         answer = reader.YN_UsersAnswer();
                         if (answer) {

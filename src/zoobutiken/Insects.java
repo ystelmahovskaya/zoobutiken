@@ -6,12 +6,6 @@ public class Insects extends AliveIndividuals {
     protected boolean venomous;
      protected boolean flying;
 
-//    public Insects(String breed, int age, boolean isPredator, boolean venomous,boolean flying) {
-//        super(breed, age, isPredator);
-//        this.flying=flying;
-//        this.venomous=venomous;
-//    }
-
    
     public boolean isVenomous() {
         return venomous;

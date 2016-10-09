@@ -7,10 +7,6 @@ public abstract class Stuff implements Product {
     protected String nameOfProduct;
     protected double price;
     protected String country;
-//    public Stuff(String nameOfProduct, double price){
-//    this.nameOfProduct=nameOfProduct;
-//    this.price=price;
-//    }
 
     
     public String getNameOfProduct() {

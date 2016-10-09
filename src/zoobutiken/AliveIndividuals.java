@@ -12,14 +12,6 @@ public abstract class AliveIndividuals implements Product {
     protected int age;
     protected boolean isPredator;
     
-
- 
-    
-//    public AliveIndividuals(String nameOfProduct, int age, boolean isPredator){
-//    this.nameOfProduct= nameOfProduct;
-//    this.age=age;
-//    this.isPredator=isPredator;
-//    }
     
     public String toString(){
     return new String(getNameOfProduct()+"|"+price+"|"+age+"|"+isIsPredator());

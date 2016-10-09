@@ -6,13 +6,7 @@ public class Spider extends AliveIndividuals {
     protected boolean venomous;
    protected String habitat;
 
-//    public Spider(String breed, int age, boolean isPredator, boolean venomous,String habitat) {
-//        super(breed, age, isPredator);
-//        this.venomous=venomous;
-//        this.habitat=habitat;
-//    }
 
-    
     public boolean isVenomous() {
         return venomous;
     }

@@ -6,13 +6,6 @@ public class Fish extends AliveIndividuals{
     
     protected int temperature;
     protected boolean liveInSaltWater;
-
-//    public Fish(String breed, int age, boolean isPredator,int temperature, boolean liveInSaltWater) {
-//        super(breed, age, isPredator);
-//        this.temperature=temperature;
-//        this.liveInSaltWater=liveInSaltWater;
-//    }
-
     
     public int getTemperature() {
         return temperature;
