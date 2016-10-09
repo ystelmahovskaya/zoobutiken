@@ -14,6 +14,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.util.Collections;
+import java.util.Comparator;
 
 //import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 public class Program {
@@ -137,7 +139,17 @@ public class Program {
                     printToFile();
                 } else if (answer == 3) {
                     changeItem();
-                } else if (answer == 7) {
+                } 
+                else if(answer==4){
+                sortByName();
+                }
+                else if(answer==5){
+                sortByPrice();
+                }
+                else if(answer==6){
+                sortByType();
+                }
+                else if (answer == 7) {
                     System.out.println("Write the name of the product which do you want to find");
                     String name = reader.usersStringInput();
                     printList(searchingByName(name));
@@ -167,18 +179,26 @@ public class Program {
                     activeBranch = -1;
                     activeBranch = branchChoice();
                 } else if (answer == 12) {
+                    if(admin){
                     addUser(addNewUser());
                     saveUsersToFile("users.json");
+                    } else {
+                        System.out.println("Wrong number");}
                 } else if (answer == 13) {
+                    if(admin){
                     System.out.println("Choose the user which do you want to delete from users' list");
                     for (int i = 0; i < users.size(); i++) {
                         System.out.println((i + 1) + " " + users.get(i));
                     }
                     int index = reader.usersIntInput() - 1;
                     deleteUser(admin, index);
-                     saveUsersToFile("users.json");
+                     saveUsersToFile("users.json");}
+                    else{
+                        System.out.println("Wrong number");}
                 } else if (answer == 14) {
+                    if(admin){
                     updateUser();
+                    } else{System.out.println("Wrong number");}
                 } else if (answer == 0) {
                     printToFile();
                     run = false;
@@ -793,4 +813,39 @@ public class Program {
             }
         }
     }
+    public void sortByPrice(){
+        Collections.sort(shops.get(activeBranch).getListOfProducts(), new Comparator<Product>() {
+        @Override
+        public int compare(Product o1, Product o2) {
+        if (o1.getPrice() > o2.getPrice()){
+            return 1;
+        }
+        else if (o1.getPrice() < o2.getPrice()){
+            return -1;
+        }
+        return 0;
+    }
+});
+        print1();
+    }
+    public void sortByName(){
+        Collections.sort(shops.get(activeBranch).getListOfProducts(), new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2){
+            return o1.getNameOfProduct().compareToIgnoreCase(o2.getNameOfProduct());
+            }
+        });
+        print1();
+    }
+
+        public void sortByType(){
+        Collections.sort(shops.get(activeBranch).getListOfProducts(), new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2){
+            return o1.getClass().getTypeName().compareTo(o2.getClass().getTypeName());
+            }
+        });
+     print1();
+}
+    
 }
