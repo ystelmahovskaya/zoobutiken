@@ -132,9 +132,10 @@ public class Program {
                         for (int i = 0; i < types.length; i++) {
                             System.out.println((i + 1) + " " + types[i]);
                         }
-                        answer2 = reader.usersIntInput() - 1;
-                    } while (answer2 < 0 && answer2 > types.length);
-                    shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard(answer2));
+                        answer2 = reader.usersIntInput();
+                    } while (answer2 != 1 && answer2 != 2 && answer2 != 3 && answer2 != 4 && answer2 != 5
+                        && answer2 != 6 && answer2 != 7 && answer2 != 8);
+                    shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard(answer2-1));
                     printToFile();
                 } else if (answer == 3) {
                     changeItem();
@@ -157,16 +158,16 @@ public class Program {
         double price = reader.usersDoubleInput();
                     printList( searchingByPrice(price));
                 } else if (answer == 9) {
+                    
                     System.out.println("Choose the type which do you want to find");
-        int answer9 = -1;
-         do {
-
+        
             for (int i = 0; i < types.length; i++) {
                 System.out.println((i + 1) + " " + types[i]);
             }
-            answer9 = reader.usersIntInput() - 1;
-        } while (answer9 < 0 && answer9 > types.length);
+        int    answer9 = reader.usersIntInput() - 1;
+        if(answer9>=0&&answer9<types.length){
                     printList(   searchingByType(answer9));
+        }
                 } else if (answer == 10) {
                     print1();
                     System.out.println("Write the number in the list which do you want to remove");
@@ -298,7 +299,7 @@ public class Program {
             br.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+           
         }
     }
 
@@ -335,7 +336,7 @@ public class Program {
                 System.out.println("do you want to change it?Y/N");
                 answer = reader.YN_UsersAnswer();
                 if (answer) {
-                    System.out.println("do you want to give admin rights to this user? Y/N");
+                    System.out.println("do you want to give admin rights to this user? Changes will be avaliable after reload. Y/N");
                     users.get(index).setIsAdmin(reader.YN_UsersAnswer());
                 }
                 saveUsersToFile("users.json");
@@ -444,7 +445,7 @@ public class Program {
             File listOfFiles[] = folder.listFiles();
             if (listOfFiles != null) {
                 for (File file : listOfFiles) {
-                    System.out.println(file);
+                   // System.out.println(file);
                 }
 
                 for (int i = 0; i < listOfFiles.length; i++) {

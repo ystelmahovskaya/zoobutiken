@@ -1,2 +1,1 @@
-{"name":"admin","username":"admin","password":"1234","isAdmin":true}
-{"name":"user","username":"user","password":"user","isAdmin":false}
+{"name":"Test1","username":"Test2","password":"Test1","isAdmin":false}
