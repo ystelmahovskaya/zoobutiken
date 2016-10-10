@@ -18,11 +18,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
+
 public class Program {
 
     protected List<Shop> shops = new ArrayList<Shop>();
     protected List<User> users = new ArrayList<User>();
-    boolean admin =false;
+    boolean admin = false;
     Reader reader = new Reader();
     Gson gsonUser = new Gson();
     final RuntimeTypeAdapterFactory<Product> adapter
@@ -134,40 +135,36 @@ public class Program {
                         }
                         answer2 = reader.usersIntInput();
                     } while (answer2 != 1 && answer2 != 2 && answer2 != 3 && answer2 != 4 && answer2 != 5
-                        && answer2 != 6 && answer2 != 7 && answer2 != 8);
-                    shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard(answer2-1));
+                            && answer2 != 6 && answer2 != 7 && answer2 != 8);
+                    shops.get(activeBranch).getListOfProducts().add(addProductFromKeyboard(answer2 - 1));
                     printToFile();
                 } else if (answer == 3) {
                     changeItem();
-                } 
-                else if(answer==4){
-                sortByName();
-                }
-                else if(answer==5){
-                sortByPrice();
-                }
-                else if(answer==6){
-                sortByType();
-                }
-                else if (answer == 7) {
+                } else if (answer == 4) {
+                    sortByName();
+                } else if (answer == 5) {
+                    sortByPrice();
+                } else if (answer == 6) {
+                    sortByType();
+                } else if (answer == 7) {
                     System.out.println("Write the name of the product which do you want to find");
                     String name = reader.usersStringInput();
                     printList(searchingByName(name));
                 } else if (answer == 8) {
-                      System.out.println("Write the price of the product which do you want to find");
-        double price = reader.usersDoubleInput();
-                    printList( searchingByPrice(price));
+                    System.out.println("Write the price of the product which do you want to find");
+                    double price = reader.usersDoubleInput();
+                    printList(searchingByPrice(price));
                 } else if (answer == 9) {
-                    
+
                     System.out.println("Choose the type which do you want to find");
-        
-            for (int i = 0; i < types.length; i++) {
-                System.out.println((i + 1) + " " + types[i]);
-            }
-        int    answer9 = reader.usersIntInput() - 1;
-        if(answer9>=0&&answer9<types.length){
-                    printList(   searchingByType(answer9));
-        }
+
+                    for (int i = 0; i < types.length; i++) {
+                        System.out.println((i + 1) + " " + types[i]);
+                    }
+                    int answer9 = reader.usersIntInput() - 1;
+                    if (answer9 >= 0 && answer9 < types.length) {
+                        printList(searchingByType(answer9));
+                    }
                 } else if (answer == 10) {
                     print1();
                     System.out.println("Write the number in the list which do you want to remove");
@@ -179,26 +176,30 @@ public class Program {
                     activeBranch = -1;
                     activeBranch = branchChoice();
                 } else if (answer == 12) {
-                    if(admin){
-                    addUser(addNewUser());
-                    saveUsersToFile("users.json");
+                    if (admin) {
+                        addUser(addNewUser());
+                        saveUsersToFile("users.json");
                     } else {
-                        System.out.println("Wrong number");}
-                } else if (answer == 13) {
-                    if(admin){
-                    System.out.println("Choose the user which do you want to delete from users' list");
-                    for (int i = 0; i < users.size(); i++) {
-                        System.out.println((i + 1) + " " + users.get(i));
+                        System.out.println("Wrong number");
                     }
-                    int index = reader.usersIntInput() - 1;
-                    deleteUser(admin, index);
-                     saveUsersToFile("users.json");}
-                    else{
-                        System.out.println("Wrong number");}
+                } else if (answer == 13) {
+                    if (admin) {
+                        System.out.println("Choose the user which do you want to delete from users' list");
+                        for (int i = 0; i < users.size(); i++) {
+                            System.out.println((i + 1) + " " + users.get(i));
+                        }
+                        int index = reader.usersIntInput() - 1;
+                        deleteUser(admin, index);
+                        saveUsersToFile("users.json");
+                    } else {
+                        System.out.println("Wrong number");
+                    }
                 } else if (answer == 14) {
-                    if(admin){
-                    updateUser();
-                    } else{System.out.println("Wrong number");}
+                    if (admin) {
+                        updateUser();
+                    } else {
+                        System.out.println("Wrong number");
+                    }
                 } else if (answer == 0) {
                     printToFile();
                     run = false;
@@ -266,7 +267,7 @@ public class Program {
             if (index >= 0 && index < users.size()) {
                 users.remove(index);
             }
-           
+
         } else {
             System.out.println("you don't have admin rights");
         }
@@ -299,7 +300,7 @@ public class Program {
             br.close();
 
         } catch (FileNotFoundException e) {
-           
+
         }
     }
 
@@ -360,46 +361,46 @@ public class Program {
     public List<Product> searchingByName(String name) {
 
         List<Product> sorted = new ArrayList<Product>();
-    
+
         for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
             if (shops.get(activeBranch).getListOfProducts().get(i).getNameOfProduct().equalsIgnoreCase(name)) {
-                
+
                 sorted.add(shops.get(activeBranch).getListOfProducts().get(i));
             }
         }
-        if (sorted.size()==0) {
+        if (sorted.size() == 0) {
             System.out.println("No matches found");
         }
         return sorted;
     }
 
-    public  List<Product> searchingByPrice(double price) {
-      
-      List<Product> sorted = new ArrayList<Product>();
+    public List<Product> searchingByPrice(double price) {
+
+        List<Product> sorted = new ArrayList<Product>();
         for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
             if (shops.get(activeBranch).getListOfProducts().get(i).getPrice() == price) {
-               
+
                 sorted.add(shops.get(activeBranch).getListOfProducts().get(i));
             }
         }
-        if (sorted.size()==0) {
+        if (sorted.size() == 0) {
             System.out.println("No matches found");
         }
         return sorted;
     }
 
     public List<Product> searchingByType(int answer) {
-        
-       List<Product> sorted = new ArrayList<Product>();
-       
+
+        List<Product> sorted = new ArrayList<Product>();
+
         for (int i = 0; i < shops.get(activeBranch).getListOfProducts().size(); i++) {
             if (shops.get(activeBranch).getListOfProducts().get(i).getClass().toString().contains(types[answer])) {
-                
-               sorted.add( shops.get(activeBranch).getListOfProducts().get(i));
+
+                sorted.add(shops.get(activeBranch).getListOfProducts().get(i));
 
             }
         }
-        if (sorted.size()==0) {
+        if (sorted.size() == 0) {
             System.out.println("No matches found");
         }
         return sorted;
@@ -409,7 +410,7 @@ public class Program {
 
         String filename = "branch_" + shops.get(activeBranch).getBranchName() + ".json";
         String folder = currentUsersHomeDir + File.separator + "branches" + File.separator;
-        
+
         File f = new File(folder);
         if (f != null) {
             f.mkdirs();
@@ -445,7 +446,7 @@ public class Program {
             File listOfFiles[] = folder.listFiles();
             if (listOfFiles != null) {
                 for (File file : listOfFiles) {
-                   // System.out.println(file);
+                    // System.out.println(file);
                 }
 
                 for (int i = 0; i < listOfFiles.length; i++) {
@@ -807,39 +808,40 @@ public class Program {
             }
         }
     }
-    public void sortByPrice(){
-        Collections.sort(shops.get(activeBranch).getListOfProducts(), new Comparator<Product>() {
-        @Override
-        public int compare(Product o1, Product o2) {
-        if (o1.getPrice() > o2.getPrice()){
-            return 1;
-        }
-        else if (o1.getPrice() < o2.getPrice()){
-            return -1;
-        }
-        return 0;
-    }
-});
-        print1();
-    }
-    public void sortByName(){
+
+    public void sortByPrice() {
         Collections.sort(shops.get(activeBranch).getListOfProducts(), new Comparator<Product>() {
             @Override
-            public int compare(Product o1, Product o2){
-            return o1.getNameOfProduct().compareToIgnoreCase(o2.getNameOfProduct());
+            public int compare(Product o1, Product o2) {
+                if (o1.getPrice() > o2.getPrice()) {
+                    return 1;
+                } else if (o1.getPrice() < o2.getPrice()) {
+                    return -1;
+                }
+                return 0;
             }
         });
         print1();
     }
 
-        public void sortByType(){
+    public void sortByName() {
         Collections.sort(shops.get(activeBranch).getListOfProducts(), new Comparator<Product>() {
             @Override
-            public int compare(Product o1, Product o2){
-            return o1.getClass().getTypeName().compareTo(o2.getClass().getTypeName());
+            public int compare(Product o1, Product o2) {
+                return o1.getNameOfProduct().compareToIgnoreCase(o2.getNameOfProduct());
             }
         });
-     print1();
-}
-    
+        print1();
+    }
+
+    public void sortByType() {
+        Collections.sort(shops.get(activeBranch).getListOfProducts(), new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getClass().getTypeName().compareTo(o2.getClass().getTypeName());
+            }
+        });
+        print1();
+    }
+
 }
